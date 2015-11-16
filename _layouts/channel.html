@@ -8,7 +8,7 @@ layout: page
   <h1>{{ date }}</h1>
   <ul>
     {% for message in day_data %}
-      <li>{{ message.text }}</li>
+      {% include message.html %}
     {% endfor %}
   </ul>
 {% endfor %}
