@@ -19,7 +19,7 @@ module Jekyll
     safe true
 
     def generate(site)
-      channels = Dir.glob('_data/slack_export/*').select { |f| File.directory? f }
+      channels = Dir.glob('_data/*').select { |f| File.directory? f }
       channels.each do |channel|
         channel_name = File.basename(channel)
         site.pages << ChannelPage.new(site, site.source, channel_name, channel_name)

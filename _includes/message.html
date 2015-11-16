@@ -1,4 +1,4 @@
-{% assign userdata = site.data.slack_export.users | where: 'id', message.user %}
+{% assign userdata = site.data.users | where: 'id', message.user %}
 {% assign username = userdata[0].name %}
 {% assign userimg = userdata[0].profile.image_32 %}
 
