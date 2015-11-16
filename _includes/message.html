@@ -1,1 +1,9 @@
-<li><em>{{ message.user }}</em>: {{ message.text }}</li>
+<!-- {% assign user = message.user %} -->
+{% assign userdata = site.data.slack_export.users | where: 'id', message.user %}
+{% assign username = userdata[0].name %}
+{% assign userimg = userdata[0].profile.image72 %}
+
+<div class="time">{{ message.ts | date: '%s' }}</div>
+<img src="{{ userimg }}" />
+<div class="user">{{ username }}</div>
+<div class="message"><div class="msg">{{ message.text }}</div></div>
