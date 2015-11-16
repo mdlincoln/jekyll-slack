@@ -2,18 +2,13 @@
 layout: page
 ---
 
-{% for file in site.data.slack_export[page.title] %}
+{% for file in site.data.slack_export[page.channel] %}
   {% assign date = file[0] %}
   {% assign day_data = file[1] %}
   <h1>{{ date }}</h1>
   <ul>
     {% for message in day_data %}
-      {% if message.subtype == nil %}
-        {% assign tokenized_message = message.text | split: ':' %}
-        {% assign usertag = tokenized_message[0] | append: ':' %}
-        {% assign message_content = message.text | remove: usertag %}
-        <li>{{ message_content }}</li>
-      {% endif %}
+      <li>{{ message.text }}</li>
     {% endfor %}
   </ul>
 {% endfor %}

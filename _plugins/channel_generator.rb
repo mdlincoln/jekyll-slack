@@ -21,7 +21,8 @@ module Jekyll
     def generate(site)
       channels = Dir.glob('_data/slack_export/*').select { |f| File.directory? f }
       channels.each do |channel|
-        site.pages << ChannelPage.new(site, site.source, channel, channel)
+        channel_name = File.basename(channel)
+        site.pages << ChannelPage.new(site, site.source, channel_name, channel_name)
       end
     end
   end
