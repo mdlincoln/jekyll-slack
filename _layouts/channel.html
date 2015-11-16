@@ -8,7 +8,9 @@ layout: page
   <h1>{{ date }}</h1>
   <div class="messages">
     {% for message in day_data %}
-      {% include message.html %}
+      {% if message.subtype != "channel_join" %}
+        {% include message.html %}
+      {% endif %}
     {% endfor %}
   </div>
 {% endfor %}
