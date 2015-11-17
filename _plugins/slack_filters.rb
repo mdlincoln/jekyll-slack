@@ -1,7 +1,10 @@
-require "date"
-
 module Jekyll
-  module SlackUserFilter
+  module SlackFilters
+
+    def slack_timestamp(input)
+      Time.at(input.to_i)
+    end
+
     def slack_user(input)
       userid = /<@(.{9})>/.match(input)
       if userid.nil?
@@ -18,4 +21,4 @@ module Jekyll
   end
 end
 
-Liquid::Template.register_filter(Jekyll::SlackUserFilter)
+Liquid::Template.register_filter(Jekyll::SlackFilters)
