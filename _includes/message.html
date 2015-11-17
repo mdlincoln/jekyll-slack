@@ -1,13 +1,15 @@
 {% assign userdata = site.data.users | where: 'id', message.user %}
 {% assign username = userdata[0].name %}
 {% assign userimg = userdata[0].profile.image_32 %}
+{% assign messagetime = message.ts %}
+{% assign messagetext = message.text | slack_user | markdownify %}
 
 <div>
   <img src="{{ userimg }}" />
   <div class="message">
     <div class="username">{{ username }}</div>
-    <div class="time">{{ message.ts | date: '%s' }}</div>
-    <div class="msg">{{ message.text }}</div>
+    <div class="time">{{ messagetime }}</div>
+    <div class="msg">{{ messagetext }}</div>
   </div>
 </div>
 <br/>
