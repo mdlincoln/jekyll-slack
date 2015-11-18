@@ -41,11 +41,20 @@ module Jekyll
     # render as markdown, and remove the troublesome pipe, which markdown
     # interprets as a table
     def slack_url(text)
-      text.gsub(/<(.+?)\|/, '<\1>')
+      text.scan(/<(\S+)\|/).flatten.each do |url|
+        text = text.gsub(/<#{url}\|\S+>/, "<#{url}>")
+      end
+      return text
+    end
+
+    # Escape pipe characters so that they don't trigger table rendering in
+    # markdown. This method ought to be called AFTER slack_url
+    def escape_pipes(input)
+      input.gsub(/\|/, "\\|")
     end
 
     def slack_message(input)
-      return slack_url(slack_user(input))
+      return escape_pipes(slack_url(slack_user(input)))
     end
 
   end
