@@ -16,23 +16,14 @@ module Jekyll
 
     # Replace user IDs with usernames by searching users.json
     def slack_user(text)
-
-      username_regex = /<@(.{9})>/
-
-      # If there are no mentioned usernames, return the unaltered text
-      if username_regex.match(text).nil?
-        return text
-      # Otherwise, loop through each mentioned user id, search for its
-      # replacement user name, and make the swap
-      else
-        parsed_msg = text
-        matched_userids = username_regex.match(parsed_msg).captures
-        matched_userids.each do |uid|
-          username = @context.registers[:site].data["users"].find {|user| user["id"] == uid}["name"]
-          parsed_msg = parsed_msg.gsub(/<@#{uid}>/, "<strong>#{username}</strong>")
-        end
-        return parsed_msg
+      parsed_msg = text
+      # Loop through each mentioned user id, search for its replacement user
+      # name, and make the swap
+      parsed_msg.scan(/<@(.{9})>/).flatten.each do |uid|
+        username = @context.registers[:site].data["users"].find {|user| user["id"] == uid}["name"]
+        parsed_msg = parsed_msg.gsub(/<@#{uid}>/, "<strong>@#{username}</strong>")
       end
+      return parsed_msg
     end
 
     # When a user submits a URL like <google.com> to Slack, it gets translated
