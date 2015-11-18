@@ -26,6 +26,19 @@ module Jekyll
       return parsed_msg
     end
 
+    # Replace channel IDs with channel names and links by searching
+    # channels.json
+    def slack_channel(text)
+      parsed_msg = text
+      # Loop through each mentioned user id, search for its replacement user
+      # name, and make the swap
+      parsed_msg.scan(/<#(.{9})>/).flatten.each do |chid|
+        chname = @context.registers[:site].data["channels"].find {|channel| channel["id"] == chid}["name"]
+        parsed_msg = parsed_msg.gsub(/<##{chid}>/, "<strong><a href='/#{chname}'>##{chname}</a></strong>")
+      end
+      return parsed_msg
+    end
+
     # When a user submits a URL like <google.com> to Slack, it gets translated
     # into a usable url like <http://www.google.com>, but archived as
     # <http://www.google.com|google.com>. We want to keep the usable part to
@@ -45,7 +58,7 @@ module Jekyll
     end
 
     def slack_message(input)
-      return escape_pipes(slack_url(slack_user(input)))
+      return escape_pipes(slack_url(slack_channel(slack_user(input))))
     end
 
   end
