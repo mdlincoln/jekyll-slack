@@ -34,7 +34,7 @@ module Jekyll
       # name, and make the swap
       parsed_msg.scan(/<#(.{9})>/).flatten.each do |chid|
         chname = @context.registers[:site].data["channels"].find {|channel| channel["id"] == chid}["name"]
-        parsed_msg = parsed_msg.gsub(/<##{chid}>/, "<strong><a href='/#{chname}'>##{chname}</a></strong>")
+        parsed_msg = parsed_msg.gsub(/<##{chid}>/, "<strong><a href='#{@context.registers[:site].baseurl}/#{chname}'>##{chname}</a></strong>")
       end
       return parsed_msg
     end
