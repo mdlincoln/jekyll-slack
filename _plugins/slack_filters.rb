@@ -37,6 +37,11 @@ module Jekyll
       return @context.registers[:site].data["channels"].find {|channel| channel["id"] == id}["name"]
     end
 
+    # Retrieve channel purpose from channel name
+    def channel_purpose(name)
+      return @context.registers[:site].data["channels"].find {|channel| channel["name"] == name}["purpose"]["value"]
+    end
+
     # Replace user IDs with usernames by searching users.json
     def slack_user(text)
       parsed_msg = text
