@@ -1,6 +1,5 @@
-{% assign userdata = site.data.users | where: 'id', message.user %}
-{% assign username = userdata[0].name %}
-{% assign userimg = userdata[0].profile.image_32 %}
+{% assign username = message.user | user_name %}
+{% assign userimg = message.user | user_img %}
 {% capture messagets %}{{ message.ts }}{% endcapture %}
 {% assign messagetime = messagets | slack_timestamp | date: "%r" %}
 {% assign messagetext = message.text | slack_message | markdownify %}

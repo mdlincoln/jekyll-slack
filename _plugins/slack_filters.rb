@@ -14,13 +14,35 @@ module Jekyll
 
   module SlackMessageFilter
 
+    # Retrieve user name from ID string
+    def user_name(id)
+      if(id == "USLACKBOT")
+        return "SlackBot"
+      else
+        return @context.registers[:site].data["users"].find {|user| user["id"] == id}["name"]
+      end
+    end
+
+    # Retrieve user image from ID string
+    def user_img(id)
+      if(id == "USLACKBOT")
+        return "https://slack.global.ssl.fastly.net/66f9/img/slackbot_32.png"
+      else
+        return @context.registers[:site].data["users"].find {|user| user["id"] == id}["profile"]["image_32"]
+      end
+    end
+
+    def channel_name(id)
+      return @context.registers[:site].data["channels"].find {|channel| channel["id"] == id}["name"]
+    end
+
     # Replace user IDs with usernames by searching users.json
     def slack_user(text)
       parsed_msg = text
       # Loop through each mentioned user id, search for its replacement user
       # name, and make the swap
       parsed_msg.scan(/<@(.{9})>/).flatten.each do |uid|
-        username = @context.registers[:site].data["users"].find {|user| user["id"] == uid}["name"]
+        username = user_name(uid)
         parsed_msg = parsed_msg.gsub(/<@#{uid}>/, "<strong>@#{username}</strong>")
       end
       return parsed_msg
@@ -33,7 +55,7 @@ module Jekyll
       # Loop through each mentioned user id, search for its replacement user
       # name, and make the swap
       parsed_msg.scan(/<#(.{9})>/).flatten.each do |chid|
-        chname = @context.registers[:site].data["channels"].find {|channel| channel["id"] == chid}["name"]
+        chname = channel_name(chid)
         parsed_msg = parsed_msg.gsub(/<##{chid}>/, "<strong><a href='#{@context.registers[:site].baseurl}/#{chname}'>##{chname}</a></strong>")
       end
       return parsed_msg
