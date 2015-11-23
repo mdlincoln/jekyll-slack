@@ -47,9 +47,9 @@ module Jekyll
       parsed_msg = text
       # Loop through each mentioned user id, search for its replacement user
       # name, and make the swap
-      parsed_msg.scan(/<@(.{9})>/).flatten.each do |uid|
+      parsed_msg.scan(/<@(.{9}).*?>/).flatten.each do |uid|
         username = user_name(uid)
-        parsed_msg = parsed_msg.gsub(/<@#{uid}>/, "<strong>@#{username}</strong>")
+        parsed_msg = parsed_msg.gsub(/<@#{uid}.*?>/, "<strong>@#{username}</strong>")
       end
       return parsed_msg
     end
