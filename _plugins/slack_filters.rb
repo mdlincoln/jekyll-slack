@@ -32,6 +32,7 @@ module Jekyll
       end
     end
 
+    # Retrieve channel name from ID string
     def channel_name(id)
       return @context.registers[:site].data["channels"].find {|channel| channel["id"] == id}["name"]
     end
