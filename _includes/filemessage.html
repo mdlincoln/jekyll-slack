@@ -1,0 +1,18 @@
+{% assign username = message.user | user_name %}
+{% assign userimg = message.user | user_img %}
+{% capture messagets %}{{ message.ts }}{% endcapture %}
+{% assign messagetime = messagets | slack_timestamp | date: "%r" %}
+{% assign fileurl = message.file.permalink_public %}
+{% assign filetitle = message.file.title %}
+{% assign filecomment = message.file.initial_comment.comment %}
+
+<div>
+  <img src="{{ userimg }}" />
+  <div class="message">
+    <div class="username">{{ username }}</div>
+    <div class="time">{{ messagetime }}</div>
+    <div class="msg">Uploaded file: <a href='{{ fileurl }}'>{{ filetitle }}</a></div>
+    {% if filecomment %}<div class="msg">Comment: {{ filecomment }}</div>{% endif %}
+  </div>
+</div>
+<br/>

@@ -12,8 +12,9 @@ layout: page
   <h1>{{ date }}</h1>
   <div class="messages">
     {% for message in day_data %}
-      {% if message.subtype %}
-      {% else %}
+      {% if message.subtype == "file_share" %}
+        {% include filemessage.html %}
+      {% elsif message.subtype == nil %}
         {% include message.html %}
       {% endif %}
     {% endfor %}
