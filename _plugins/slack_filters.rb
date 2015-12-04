@@ -28,7 +28,7 @@ module Jekyll
       if(id == "USLACKBOT")
         return "https://slack.global.ssl.fastly.net/66f9/img/slackbot_32.png"
       else
-        return @context.registers[:site].data["users"].find {|user| user["id"] == id}["profile"]["image_32"]
+        return "/assets/avatars/#{id}.png"
       end
     end
 
