@@ -13,5 +13,5 @@ JSON output. Therefore, you must preprocess every JSON file in the export once
 to remove the unnecessary escapes:
 
 ```sh
-find _data/ -name '*.json' -exec sed -i '' 's/\\\//\//g' {} \;
+find _data/ -name '*.json' -exec sed -i '' -e 's/\\\//\//g' {} \;
 ```
